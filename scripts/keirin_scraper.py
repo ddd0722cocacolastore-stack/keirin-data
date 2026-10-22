@@ -262,6 +262,14 @@ def parse_race(venue_slug, race_id):
 
     try:
         tables = pd.read_html(StringIO(resp.text))
+
+    # デバッグ：ライン情報らしいテーブルの中身を確認
+    for i, t in enumerate(tables):
+        t_str = t.to_string()
+        if "最 終 B S" in t_str or "周 回 ・ 戦 法" in t_str:
+            print(f"\n===== ライン候補テーブル番号: {i} =====")
+            print(t.to_string(index=False))
+
     except Exception as e:
         print(f"  ⚠️  テーブル取得失敗 {race_id}: {e}")
         return []
